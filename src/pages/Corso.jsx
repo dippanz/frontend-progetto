@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getCourseById } from "../Services/RESTService";
+import { getCourseById, subscibeUser, unSubscibeUser } from "../Services/RESTService";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -114,9 +114,34 @@ export default function Corso() {
     modifyCategoryId(formData.categoria.nomeCategoria);
   }, [formData.categoria.nomeCategoria]);
 
-  const handleSubscribeClick = () => {};
+  const handleSubscribeClick = async () => {
 
-  const handleUnsubscribeClick = () => {};
+    
+    const response = await subscibeUser({
+      emailUtente: currentUser.email,
+      idCorso: formData.id,
+    });
+
+    if(response.ok){
+      alert("Unsubscriber correctly")
+    }else{
+      alert("Unsubscriber error")
+    }
+  };
+
+  const handleUnsubscribeClick = async () => {
+
+    const response = await unSubscibeUser({
+      emailUtente: currentUser.email,
+      idCorso: formData.id,
+    });
+
+    if(response.ok){
+      alert("Unsubscriber correctly")
+    }else{
+      alert("Unsubscriber error")
+    }
+  };
 
   return (
     <div
