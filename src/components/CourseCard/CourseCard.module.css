@@ -1,0 +1,9 @@
+.myCourseCard {
+  width: 20rem;
+  margin-inline: 0.5rem;
+  transition: transform 0.2s;
+}
+
+.myCourseCard:hover {
+    transform: scale(1.05);
+}
