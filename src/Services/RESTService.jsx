@@ -201,3 +201,28 @@ export async function getCorsiByEmailUtente(email) {
   console.log("jsonResponse", jsonResponse);
   return jsonResponse;
 }
+
+export async function subscibeUser(dataSubscription) {
+  const response = await fetch(
+    `http://localhost:8080/api/utente/${dataSubscription.emailUtente}/subscribe-corso/${dataSubscription.idCorso}`,
+    {
+      mode: "cors",
+      method: "PUT",
+    }
+  );
+
+  return response;
+}
+
+export async function unSubscibeUser(dataSubscription) {
+  const response = await fetch(
+    `http://localhost:8080/api/utente/${dataSubscription.emailUtente}/unsubscribe-corso/${dataSubscription.idCorso}`,
+    {
+      mode: "cors",
+      method: "DELETE",
+    }
+  );
+
+  return response;
+}
+
