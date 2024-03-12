@@ -1,14 +1,15 @@
 export const URLs = {
   registerUrl: 'http://localhost:8080/api/utente/registrazione',
   loginUrl: 'http://localhost:8080/api/utente/login',
-  getAllUsersUrl: 'http://localhost:8080/api/utente/utenti',
-  deleteUserUrl: 'http://localhost:8080/api/utente/delete/',
-  getAllCourses: 'http://localhost:8080/api/corsi/corsi',
+  getAllUsersUrl: 'http://localhost:8080/api/utente/get/all',
+  deleteUserUrl: 'http://localhost:8080/api/utente/deleteUser/',
+  getAllCourses: 'http://localhost:8080/api/corso/getAll',
   updateCourse: 'http://localhost:8080/api/corsi/update',
-  updateUser: 'http://localhost:8080/api/utente/update',
-  getUserbyEmail: 'http://localhost:8080/api/utente/utente',
-  createCourse: 'http://localhost:8080/api/corsi/create',
-  deleteCourse: 'http://localhost:8080/api/corsi/delete/'
+  updateUser: 'http://localhost:8080/api/utente/aggiorna',
+  getUserbyEmail: 'http://localhost:8080/api/utente?email=',
+  createCourse: 'http://localhost:8080/api/corso',
+  deleteCourse: 'http://localhost:8080/api/corso/delete/',
+  getCorsiByEmailUtente: 'http://localhost:8080/api/utente/getCorsi/',
 }
 
 //aggiungere url per create corso

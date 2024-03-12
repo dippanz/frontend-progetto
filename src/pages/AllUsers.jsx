@@ -135,7 +135,7 @@ export default function AllUsers() {
                         </div>
                       </td>
                       <td className="text-center">
-                        {user.ruoli.length == 0 ? (
+                        {!user.ruoli.some((ruolo) => ruolo.tipologia == 'Admin') ? (
                           <>
                             <Button
                               key={Math.random()}

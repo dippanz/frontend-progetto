@@ -23,6 +23,7 @@ export default function Profile() {
     if (userInfo != null) {
       const response = await getUserByEmail(userInfo.email);
       const jsonResponse = await response.json();
+      console.log(jsonResponse)
       setProfileData(jsonResponse);
     }
   };

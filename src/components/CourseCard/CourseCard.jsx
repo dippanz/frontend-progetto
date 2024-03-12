@@ -5,6 +5,7 @@ import { deleteCourse } from "../../Services/RESTService";
 import { useEffect, useState } from "react";
 
 export default function CourseCard({
+  idCorso,
   immagineCopertina,
   nomeCorso,
   durata,
@@ -23,11 +24,11 @@ export default function CourseCard({
   }, [])
 
   const handleClick = () => {
-    navigateTo(`/corsi/${nomeCorso}`);
+    navigateTo(`/corsi/${idCorso}`);
   };
 
   const handleDeleteClick = async () => {
-    const response = await deleteCourse(nomeCorso);
+    const response = await deleteCourse(idCorso);
     if(response == 200){
       fetchData();
     }

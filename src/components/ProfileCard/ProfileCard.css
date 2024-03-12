@@ -1,0 +1,14 @@
+.containerProfile {
+    display: flex;
+    justify-content: center;
+    margin: 5rem;
+    border: 2px solid black;
+    padding: 5rem;
+  }
+  
+  .containerImageProfile {
+    margin-right: 5rem;
+    height: 100px;
+    width: 100px;
+  }
+  

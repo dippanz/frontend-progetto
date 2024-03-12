@@ -3,12 +3,12 @@ import { deleteUser } from "../../Services/RESTService";
 import { deleteCookie } from "../../Services/RESTService";
 import { cookieTypes } from "../../Services/config/rest-service-config";
 import { useId } from "react";
+import imageProfile from "../../assets/images/icon-profile.png"
+import "./ProfileCard.css"
 
 export default function ProfileCard({ profileData, setCurrentUser }) {
   const navigate = useNavigate();
-
-  const randId = useId()
-
+  
   const handleDeleteClick = async () => {
     const response = await deleteUser(email);
     if (response == 200) {
@@ -19,20 +19,36 @@ export default function ProfileCard({ profileData, setCurrentUser }) {
   };
 
   return (
-    <div className="card" style={{ width: "18rem" }}>
-      <img src="..." className="card-img-top" alt="..." />
-      <div className="card-body">
-        <h5 className="card-title">
-          {profileData.nome} {profileData.cognome}
-        </h5>
-        <h5 className="card-title">{profileData.email}</h5>
-        {profileData?.ruoli?.map((ruolo) => (
-          <h5 key={randId} className="card-title">{ruolo.tipologia}</h5>
-        ))}
-        <button className="btn btn-danger" onClick={handleDeleteClick}>
-          Elimina
-        </button>
-      </div>
-    </div>
+    <div>
+          <div className="containerProfile">
+            <div className="containerImageProfile">
+              <img src={imageProfile} alt="profile image" />
+            </div>
+
+            <div className="containerDataProfile">
+              <p>
+                <b>First Name:</b> {profileData.nome}{" "}
+              </p>
+              <p>
+                <b>Last Name:</b> {profileData.cognome}
+              </p>
+              <p>
+                <b>Email:</b> {profileData.email}{" "}
+              </p>
+
+              <div>
+                <p>
+                  <b>Ruoli:</b>
+                   {profileData?.ruoli?.map((role) => (
+                    <span key={role.id != null ? role.id : Math.random()}>
+                      {" "}
+                      {role.tipologia},
+                    </span>
+                  ))} 
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
   );
 }

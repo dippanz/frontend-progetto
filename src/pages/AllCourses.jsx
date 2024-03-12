@@ -7,6 +7,7 @@ import {
   getAllCourses,
   createCourse,
   getBearerToken,
+  getCategoriaById,
 } from "../Services/RESTService";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -35,8 +36,17 @@ export default function AllCourses() {
   }, []);
 
   const aggiungiCorso = async (corso) => {
+    const datiCorso = {
+      nomeCorso: corso.nomeCorso,
+      desc: corso.descrizioneBreve,
+      descCompleta: corso.descrizioneCompleta,
+      durata: corso.durata,
+      categoria: getCategoriaById(corso.idCategoria),
+      idDocente: 8, // questo dovrebbe essere l'id dell'user corrente che dovrebbe essere un docente, ma si deve implementare il modo di prendere l'id quindi lo fisso
+    };
+
     //funzione per creare corso e poi fetch dei corsi
-    const response = await createCourse(corso);
+    const response = await createCourse(datiCorso);
     if (response == 200) {
       fetchData();
     }
@@ -61,6 +71,7 @@ export default function AllCourses() {
         {corsi?.map((course) => (
           <CourseCard
             key={Math.random()}
+            idCorso={course.id}
             immagineCopertina={copertina}
             nomeCorso={course.nomeCorso}
             durata={course.durata}
