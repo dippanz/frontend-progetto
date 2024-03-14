@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getCourseById, subscibeUser, unSubscibeUser } from "../Services/RESTService";
+import {
+  getCourseById,
+  subscibeUser,
+  unSubscibeUser,
+} from "../Services/RESTService";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -23,23 +27,21 @@ export default function Corso() {
     id: id.id,
     nomeCorso: "",
     categoria: {
+      id: "",
       nomeCategoria: "",
     },
     durata: "",
     descrizioneBreve: "",
     descrizioneCompleta: "",
-    idCategoria: "",
   });
-
-  const [isSubscribed, setIsSubscribed] = useState(false);
 
   // Utilizzo di useMemo per memorizzare il risultato della fetch
   const corsi = useMemo(async () => {
     return await getCorsiByEmailUtente(currentUser.email);
   }, [currentUser.email]);
 
-  // Logica per impostare lo stato di isSubscribed
-  useEffect(() => {
+  // setto lo stato iniziale direttamente dentro useState
+  const [isSubscribed, setIsSubscribed] = useState(() => {
     corsi.then((corso) => {
       if (corso.length > 0 && corso.filter((id) => id == formData.id)) {
         setIsSubscribed(true);
@@ -47,23 +49,45 @@ export default function Corso() {
         setIsSubscribed(false);
       }
     });
-  }, [corsi, formData.id]);
+  });
 
   const modifyCategoryId = (categoryName) => {
+    
     switch (categoryName) {
       case "FrontEnd":
-        setFormData({ ...formData, idCategoria: courseCategories.FrontEnd });
+        setFormData({
+          ...formData,
+          categoria: {
+            id: courseCategories.FrontEnd,
+            nomeCategoria: categoryName,
+          },
+        });
         break;
       case "BackEnd":
-        setFormData({ ...formData, idCategoria: courseCategories.BackEnd });
+        setFormData({
+          ...formData,
+          categoria: {
+            id: courseCategories.BackEnd,
+            nomeCategoria: categoryName,
+          },
+        });
         break;
       case "FullStack":
-        setFormData({ ...formData, idCategoria: courseCategories.FullStack });
+        setFormData({
+          ...formData,
+          categoria: {
+            id: courseCategories.FullStack,
+            nomeCategoria: categoryName,
+          },
+        });
         break;
       case "CyberSecurity":
         setFormData({
           ...formData,
-          idCategoria: courseCategories.CyberSecurity,
+          categoria: {
+            id: courseCategories.CyberSecurity,
+            nomeCategoria: categoryName,
+          },
         });
         break;
     }
@@ -76,7 +100,9 @@ export default function Corso() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name == "categoria") {
-      setFormData({ ...formData, categoria: { nomeCategoria: value } });
+      setFormData({ ...formData, categoria: { 
+        id: "",
+        nomeCategoria: value } });
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -89,12 +115,12 @@ export default function Corso() {
       id: id.id,
       nomeCorso: "",
       categoria: {
+        id: "",
         nomeCategoria: "",
       },
       durata: "",
       descrizioneBreve: "",
       descrizioneCompleta: "",
-      idCategoria: "",
     });
     if (response == 200) {
       navigate("/corsi");
@@ -115,31 +141,30 @@ export default function Corso() {
   }, [formData.categoria.nomeCategoria]);
 
   const handleSubscribeClick = async () => {
-
-    
     const response = await subscibeUser({
       emailUtente: currentUser.email,
       idCorso: formData.id,
     });
 
-    if(response.ok){
-      alert("Unsubscriber correctly")
-    }else{
-      alert("Unsubscriber error")
+    if (response.ok) {
+      setIsSubscribed(true);
+      alert("Subscribe correctly");
+    } else {
+      alert("Subscribe error");
     }
   };
 
   const handleUnsubscribeClick = async () => {
-
     const response = await unSubscibeUser({
       emailUtente: currentUser.email,
       idCorso: formData.id,
     });
 
-    if(response.ok){
-      alert("Unsubscriber correctly")
-    }else{
-      alert("Unsubscriber error")
+    if (response.ok) {
+      setIsSubscribed(false);
+      alert("Unsubscribe correctly");
+    } else {
+      alert("Unsubscribe error");
     }
   };
 
@@ -190,24 +215,15 @@ export default function Corso() {
             </button>
           )
         }
+
         {formVisibility && (
           <form id="formModificaCorso" onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <input
-                type="text"
-                className="form-control"
-                name="id"
-                value={formData.id}
-                placeholder="ID"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="mb-3">
+            <div className="mb-3 mt-5">
               <select
                 className="form-select"
                 name="categoria"
                 required
-                value={formData.categoria}
+                value={formData.categoria.nomeCategoria}
                 onChange={handleChange}
               >
                 <option value="">Seleziona una categoria</option>

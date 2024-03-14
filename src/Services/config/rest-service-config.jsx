@@ -4,7 +4,7 @@ export const URLs = {
   getAllUsersUrl: 'http://localhost:8080/api/utente/get/all',
   deleteUserUrl: 'http://localhost:8080/api/utente/deleteUser/',
   getAllCourses: 'http://localhost:8080/api/corso/getAll',
-  updateCourse: 'http://localhost:8080/api/corsi/update',
+  updateCourse: 'http://localhost:8080/api/corso/update',
   updateUser: 'http://localhost:8080/api/utente/aggiorna',
   getUserbyEmail: 'http://localhost:8080/api/utente?email=',
   createCourse: 'http://localhost:8080/api/corso',
